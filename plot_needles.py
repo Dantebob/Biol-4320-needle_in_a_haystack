@@ -52,27 +52,31 @@ def haystack_plot(in_file, out_file):
     plt.xlabel("column")
     plt.ylabel("row")
     plt.savefig(out_file)
-    return
+    plt.clf()
 
 def haystack_histogram(in_file, out_file):
     position_log = log_char_position(in_file, "|")
     histogram = []
     with open(in_file) as f:
+        num_of_lines = 0
         for i,line in enumerate(f):
-            count = 0
+            num_of_lines +=1
             for p in position_log:
-                if p[0] = i:
-                    count += 1
-            histogram.append(count)
-    plt.hist(histogram)
+                if p[0] == i:
+                    histogram.append(i)
+    plt.hist(histogram, bins = num_of_lines)
+    plt.xlabel("Line number")
+    plt.ylabel("Number of needles")
     plt.savefig(out_file)
-
+    plt.clf()
 
 if __name__ == '__main__':
     #outfile should be .png file.
-    out_file = "needle_plot.png"
+    plot_out_file = "needle_plot.png"
+    hist_out_file = "needle_histogram.png"
     in_file = "haystack.txt"
-    haystack_plot(in_file, out_file)
+    haystack_histogram(in_file, hist_out_file)
+    haystack_plot(in_file, plot_out_file)
     #needle_list = log_char_position("haystack.txt", "|")
     #num_needles = len(needle_list)
     #print(needle_list)
