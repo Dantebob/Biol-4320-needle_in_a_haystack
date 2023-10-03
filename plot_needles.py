@@ -33,7 +33,7 @@ def log_char_position(file_name, target_char):
 		print(f"File '{file_name}' not found.")
 		return None
 
-def haystack_plot(in_file, out_file):
+def find_needles(in_file):
     x = []
     y = []
     position_log = log_char_position(in_file, "|")
@@ -41,11 +41,32 @@ def haystack_plot(in_file, out_file):
         # p is a tuple with x and y coordinates
         x.append(p[0])
         y.append(p[1])
+    return(x, y)
+
+
+def haystack_plot(in_file, out_file):
+    tuple_xy = find_needles(in_file)
+    x = tuple_xy[0]
+    y = tuple_xy[1]
     plt.scatter(x, y, label = "needles")
     plt.xlabel("column")
     plt.ylabel("row")
     plt.savefig(out_file)
     return
+
+def haystack_histogram(in_file, out_file):
+    position_log = log_char_position(in_file, "|")
+    histogram = []
+    with open(in_file) as f:
+        for i,line in enumerate(f):
+            count = 0
+            for p in position_log:
+                if p[0] = i:
+                    count += 1
+            histogram.append(count)
+    plt.hist(histogram)
+    plt.savefig(out_file)
+
 
 if __name__ == '__main__':
     #outfile should be .png file.
